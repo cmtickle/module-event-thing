@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+ Copyright Colin Tickle. All rights reserved.
+ See LICENSE for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <event_thing>
+            <rest>
+                <url></url>
+            </rest>
+        </event_thing>
+    </default>
+</config>

@@ -1,0 +1,20 @@
+{
+    "name": "cmtickle/module-event-thing",
+    "description": "Magento 2 module to enable low-code/no-code Plugins and Observers",
+    "type": "magento2-module",
+    "license": [
+        "MIT"
+    ],
+    "require": {
+        "magento/framework": ">=101.0.0"
+    },
+    "autoload": {
+        "files": [
+            "event_thing/registration.php"
+        ],
+        "psr-4": {
+            "Magento\\Framework\\": "framework/",
+            "Cmtickle\\EventThing\\": "event_thing/"
+        }
+    }
+}
