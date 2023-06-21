@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 /*
-* Copyright Colin Tickle. All rights reserved.
-* See LICENSE for license details.
+* © Colin Tickle. See LICENSE for details.
 */
 namespace Cmtickle\EventThing\Observer;
 

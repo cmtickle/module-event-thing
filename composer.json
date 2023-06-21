@@ -3,7 +3,8 @@
     "description": "Magento 2 module to enable low-code/no-code Plugins and Observers",
     "type": "magento2-module",
     "license": [
-        "MIT"
+        "GPLv3",
+        "Proprietary"
     ],
     "require": {
         "magento/framework": ">=101.0.0"

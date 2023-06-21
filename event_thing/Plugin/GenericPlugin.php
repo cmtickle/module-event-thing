@@ -1,4 +1,7 @@
-<?php
+<?php declare(strict_types=1);
+/*
+* © Colin Tickle. See LICENSE for details.
+*/
 namespace Cmtickle\EventThing\Plugin;
 
 class GenericPlugin

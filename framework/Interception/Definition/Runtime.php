@@ -5,7 +5,10 @@
  *
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * Modifications for Event Thing © Colin Tickle. See LICENSE for details.
  */
+
 namespace Magento\Framework\Interception\Definition;
 
 use Cmtickle\EventThing\Plugin\GenericPlugin;

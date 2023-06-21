@@ -1,6 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+/*
+* © Colin Tickle. See LICENSE for details.
+*/
 
-namespace Cmtickle\EventThingRemoteConfig\Transport;
+namespace Cmtickle\EventThing\Transport;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;

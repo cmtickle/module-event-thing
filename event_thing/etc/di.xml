@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <!--
- Copyright Colin Tickle. All rights reserved.
- See LICENSE for license details.
+ © Colin Tickle. See LICENSE for details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Cmtickle\EventThing\Transport\TransportInterface"
-                type="Cmtickle\EventThing\Transport\BaseTransport"/>
+                type="Cmtickle\EventThing\Transport\DummyTransport"/>
 </config>
