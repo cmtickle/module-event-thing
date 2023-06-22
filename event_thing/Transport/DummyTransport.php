@@ -6,7 +6,7 @@ namespace Cmtickle\EventThing\Transport;
 
 class DummyTransport implements TransportInterface
 {
-    public function process(array $data):array
+    public function process(array $data): array
     {
         return $data;
     }

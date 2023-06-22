@@ -26,7 +26,7 @@ abstract class AbstractObserver implements \Magento\Framework\Event\ObserverInte
     protected function processData(array $data): array
     {
         $data['event_type'] = 'observer';
-        return $this->transport->send($data);
+        return $this->transport->process($data);
     }
 
     /**

@@ -8,7 +8,7 @@ namespace Cmtickle\EventThing\Transport;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
-class Rest extends \Cmtickle\EventThing\Transport\BaseTransport
+class Rest implements TransportInterface
 {
     protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
     protected \Magento\Framework\Serialize\Serializer\Json $serialize;
@@ -26,7 +26,6 @@ class Rest extends \Cmtickle\EventThing\Transport\BaseTransport
         $this->scopeConfig = $scopeConfig;
         $this->serialize = $serialize;
     }
-
 
     /**
      * @return string
@@ -48,7 +47,10 @@ class Rest extends \Cmtickle\EventThing\Transport\BaseTransport
         return $this->restUrl;
     }
 
-    public function send(array $data):array
+    /**
+     * @inheritdoc
+     */
+    public function process(array $data): array
     {
         $curl = curl_init($this->getRestUrl());
         curl_setopt($curl, CURLOPT_HEADER, false);

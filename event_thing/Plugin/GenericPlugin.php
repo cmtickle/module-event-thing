@@ -34,7 +34,7 @@ class GenericPlugin
     protected function processData(array $data)
     {
         $data['event_type'] = 'plugin';
-        return $this->transport->send($data);
+        return $this->transport->process($data);
     }
 
     protected function beforeFunction($methodName, $pluggedInClass, array $arguments = [])
