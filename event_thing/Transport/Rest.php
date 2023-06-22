@@ -62,6 +62,6 @@ class Rest implements TransportInterface
         curl_setopt($curl, CURLOPT_POSTFIELDS, $this->serialize->serialize($data));
         $response = curl_exec($curl);
 
-        return $this->serialize->Unserialize($response ?: $data);
+        return $response ? $this->serialize->Unserialize($response) : $data;
     }
 }
