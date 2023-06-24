@@ -37,7 +37,7 @@ class GenericPlugin
     protected function processData(array $data)
     {
         $data['event_type'] = 'plugin';
-        $data['customer_ip'] = $this->remoteAddress->readAddress();
+        $data['customer_ip'] = $this->remoteAddress->getRemoteHost();
         return $this->transport->process($data);
     }
 

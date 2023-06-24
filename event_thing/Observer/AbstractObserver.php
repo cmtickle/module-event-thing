@@ -29,7 +29,7 @@ abstract class AbstractObserver implements \Magento\Framework\Event\ObserverInte
     protected function processData(array $data): array
     {
         $data['event_type'] = 'observer';
-        $data['customer_ip'] = $this->remoteAddress->readAddress();
+        $data['customer_ip'] = $this->remoteAddress->getRemoteHost();
         return $this->transport->process($data);
     }
 
