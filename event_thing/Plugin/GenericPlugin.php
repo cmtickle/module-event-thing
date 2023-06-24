@@ -41,7 +41,6 @@ class GenericPlugin
     {
         if ($this->isDataObject($pluggedInClass)) {
             $data =  [
-                "ip" => "13.127.29.71", /* @todo: make this dynamic */
                 'pluginClass' => self::class,
                 'originalClass' => $this->getPluggedInClass(),
                 'method' => $methodName,
@@ -58,7 +57,6 @@ class GenericPlugin
     {
         if ($this->isDataObject($pluggedInClass)) {
             $data = [
-                "ip" => "13.127.29.71", /* @todo: make this dynamic */
                 'pluginClass' => self::class,
                 'originalClass' => $this->getPluggedInClass(),
                 'method' => $methodName,
