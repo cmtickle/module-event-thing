@@ -6,6 +6,7 @@ namespace Cmtickle\EventThing\Plugin;
 
 class GenericPlugin
 {
+    protected \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress;
     protected \Cmtickle\EventThing\Transport\TransportInterface $transport;
 
     /**
@@ -17,10 +18,12 @@ class GenericPlugin
     protected string $pluggedInClass;
 
     public function __construct(
+        \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress,
         \Cmtickle\EventThing\Transport\TransportInterface $transport,
         string $pluggedInClass,
         array $functions
     ) {
+        $this->remoteAddress = $remoteAddress;
         $this->transport = $transport;
         $this->pluggedInClass = $pluggedInClass;
         $this->functions = $functions;
@@ -34,6 +37,7 @@ class GenericPlugin
     protected function processData(array $data)
     {
         $data['event_type'] = 'plugin';
+        $data['customer_ip'] = $this->remoteAddress->readAddress();
         return $this->transport->process($data);
     }
 

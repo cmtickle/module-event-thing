@@ -8,14 +8,17 @@ use Cmtickle\EventThing\Transport\TransportInterface;
 
 abstract class AbstractObserver implements \Magento\Framework\Event\ObserverInterface
 {
+    protected \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress;
     protected \Cmtickle\EventThing\Transport\TransportInterface $transport;
 
     /**
      * @param TransportInterface $transport
      */
     public function __construct(
+        \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress,
         \Cmtickle\EventThing\Transport\TransportInterface $transport
     ) {
+        $this->remoteAddress = $remoteAddress;
         $this->transport = $transport;
     }
 
@@ -26,6 +29,7 @@ abstract class AbstractObserver implements \Magento\Framework\Event\ObserverInte
     protected function processData(array $data): array
     {
         $data['event_type'] = 'observer';
+        $data['customer_ip'] => $this->remoteAddress->readAddress();
         return $this->transport->process($data);
     }
 
