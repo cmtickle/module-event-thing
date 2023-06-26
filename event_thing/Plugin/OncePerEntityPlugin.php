@@ -17,15 +17,11 @@ class OncePerEntityPlugin extends GenericPlugin
         if ($this->isDataObject($pluggedInClass)) {
             $entityId = $pluggedInClass->getData($pluggedInClass->getResource()->getIdFieldName());
             $eventPrefix = $pluggedInClass->getEventPrefix();
-            if (!isset(self::$called[$eventPrefix . '__' . $name])) {
-                self::$called[$eventPrefix . '__' . $name][(string) $entityId] = true;
-                return parent::__call($name, $arguments);
-            } elseif (!isset(self::$called[$eventPrefix . '__' . $name][(string) $entityId])) {
-                self::$called[$eventPrefix . '__' . $name][(string) $entityId] = true;
-                return parent::__call($name, $arguments);
-            } else {
-                return end($arguments);
+            if (!isset(self::$called[$eventPrefix . '__' . $name]) ||
+                !isset(self::$called[$eventPrefix . '__' . $name][(string) $entityId])) {
+                self::$called[$eventPrefix . '__' . $name][(string) $entityId] = parent::__call($name, $arguments);
             }
+            return self::$called[$eventPrefix . '__' . $name][(string) $entityId];
         }
     }
 }

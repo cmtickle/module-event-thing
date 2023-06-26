@@ -54,7 +54,7 @@ class GenericPlugin
             $processed = $this->processData($data);
         }
 
-        return isset($processed) ? $processed['arguments'] : $arguments;
+        return isset($processed) ? [$processed['arguments']] : [$arguments];
     }
 
     protected function afterFunction($methodName, $pluggedInClass, $returnedParameters)
