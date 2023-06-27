@@ -15,6 +15,8 @@ use Cmtickle\EventThing\Plugin\GenericPlugin;
 use Magento\Framework\App\Arguments\ValidationState;
 use Magento\Framework\Interception\DefinitionInterface;
 
+use function Safe\class_implements;
+
 class Runtime implements DefinitionInterface
 {
     private static array|null $backtrace = null;
@@ -87,7 +89,7 @@ class Runtime implements DefinitionInterface
     public function getMethodList($type)
     {
         $methods = [];
-        if (str_starts_with($type, "Cmtickle\EventThing\Plugin")) {
+        if (is_a($type, "\Cmtickle\EventThing\Plugin\GenericPlugin", true)) {
             $allMethods = $this->getDynamicClassMethods();
         } elseif (class_exists($type)) {
             $allMethods = get_class_methods($type);
