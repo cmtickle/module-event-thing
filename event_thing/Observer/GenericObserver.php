@@ -16,14 +16,16 @@ class GenericObserver extends AbstractObserver
     {
         $event = $observer->getEvent();
 
-        if ($event->hasData('data_object') && $dataObject = (object) $event->getData('data_object')) {
-            $data = ['event_name' => $event->getName()];
-            $data['data_object'] = (
+        if ($event->hasData('data_object') && $dataObject = $event->getData('data_object')) {
+            $data = ['eventName' => $event->getName()];
+            $data['dataObject'] = (
                 $this->isDataObject($dataObject::class) ?
                     $dataObject->toArray() :
-                    $dataObject->getData()
+                    $event->getData()
             );
             $this->processData($data);
+        } else {
+            $this->processData($event->getData());
         }
     }
 

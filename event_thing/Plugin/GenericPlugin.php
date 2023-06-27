@@ -4,6 +4,9 @@
 */
 namespace Cmtickle\EventThing\Plugin;
 
+use Cmtickle\EventThing\Transport\TransportInterface;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
+
 class GenericPlugin
 {
     protected \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress;
@@ -17,6 +20,12 @@ class GenericPlugin
     protected array|null $pluginMethods = null;
     protected string $pluggedInClass;
 
+    /**
+     * @param RemoteAddress $remoteAddress
+     * @param TransportInterface $transport
+     * @param string $pluggedInClass
+     * @param array $functions
+     */
     public function __construct(
         \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress,
         \Cmtickle\EventThing\Transport\TransportInterface $transport,
@@ -29,50 +38,71 @@ class GenericPlugin
         $this->functions = $functions;
     }
 
-    protected function isDataObject($pluggedInClass)
+    /**
+     * @param $pluggedInClass
+     * @return bool
+     */
+    protected function isDataObject($pluggedInClass): bool
     {
         return is_a($pluggedInClass, \Magento\Framework\DataObject::class, true);
     }
 
-    protected function processData(array $data)
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function processData(array $data): array
     {
-        $data['event_type'] = 'plugin';
-        $data['customer_ip'] = $this->remoteAddress->getRemoteAddress();
+        $data['eventType'] = 'plugin';
+        $data['customerIp'] = $this->remoteAddress->getRemoteAddress();
         return $this->transport->process($data);
     }
 
-    protected function beforeFunction($methodName, $pluggedInClass, array $arguments = [])
+    /**
+     * @param $methodName
+     * @param $pluggedInClass
+     * @param array $arguments
+     * @return array|array[]
+     */
+    protected function beforeFunction($methodName, $pluggedInClass, array $arguments = []): array
     {
-        if ($this->isDataObject($pluggedInClass)) {
-            $data =  [
-                'pluginClass' => self::class,
-                'originalClass' => $this->getPluggedInClass(),
-                'method' => $methodName,
-                'dataObject' => $pluggedInClass->toArray(),
-                'arguments' => $arguments
-            ];
-            $processed = $this->processData($data);
-        }
+        $data =  [
+            'pluggedInClass' => $this->getPluggedInClass(),
+            'pluggedInMethod' => $methodName,
+            'pluginType' => 'before',
+            'dataObject' => $this->isDataObject($pluggedInClass) ? $pluggedInClass->toArray() : [],
+            'arguments' => $arguments
+        ];
+        $processed = $this->processData($data);
 
-        return isset($processed) ? [$processed['arguments']] : [$arguments];
+        return [$processed['arguments']];
     }
 
-    protected function afterFunction($methodName, $pluggedInClass, $returnedParameters)
+    /**
+     * @param $methodName
+     * @param $pluggedInClass
+     * @param $returnedParameters
+     * @return mixed
+     */
+    protected function afterFunction($methodName, $pluggedInClass, $returnedParameters): mixed
     {
-        if ($this->isDataObject($pluggedInClass)) {
-            $data = [
-                'pluginClass' => self::class,
-                'originalClass' => $this->getPluggedInClass(),
-                'method' => $methodName,
-                'dataObject' => $pluggedInClass->getData(),
-                'returnedParameters' => $returnedParameters
-            ];
-            $processed = $this->processData($data);
-        }
+        $data = [
+            'pluggedInClass' => $this->getPluggedInClass(),
+            'pluggedInMethod' => $methodName,
+            'pluginType' => 'after',
+            'dataObject' => $this->isDataObject($pluggedInClass) ? $pluggedInClass->getData() : [],
+            'returnedParameters' => $returnedParameters
+        ];
+        $processed = $this->processData($data);
 
-        return isset($processed) ? $processed['returnedParameters'] : $returnedParameters;
+        return $processed['returnedParameters'];
     }
 
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return array[]|false|mixed
+     */
     public function __call(string $name, array $arguments)
     {
         switch(substr($name, 0, 5)) {
@@ -89,12 +119,18 @@ class GenericPlugin
         }
     }
 
-    public function getPluggedInClass()
+    /**
+     * @return string
+     */
+    public function getPluggedInClass(): string
     {
         return $this->pluggedInClass;
     }
 
-    public function getPluginMethods():array
+    /**
+     * @return array
+     */
+    public function getPluginMethods(): array
     {
         if (!(null === $this->pluginMethods)) {
             return $this->pluginMethods;

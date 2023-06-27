@@ -10,9 +10,13 @@ class OncePerEntityPlugin extends GenericPlugin
 {
     protected static array $called = [];
 
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return array|array[]|false|mixed
+     */
     public function __call(string $name, array $arguments)
     {
-        /** @var DataObject $pluggedInClass */
         $pluggedInClass = $arguments[0];
         if ($this->isDataObject($pluggedInClass)) {
             $entityId = $pluggedInClass->getData($pluggedInClass->getResource()->getIdFieldName());
@@ -22,6 +26,8 @@ class OncePerEntityPlugin extends GenericPlugin
                 self::$called[$eventPrefix . '__' . $name][(string) $entityId] = parent::__call($name, $arguments);
             }
             return self::$called[$eventPrefix . '__' . $name][(string) $entityId];
+        } else {
+            return parent::__call($name, $arguments);
         }
     }
 }

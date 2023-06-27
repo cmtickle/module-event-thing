@@ -19,10 +19,9 @@ class OncePerEventObserver extends GenericObserver
         $eventName = $observer->getEvent()->getName();
         if (isset(self::$called[$eventName])) {
             return;
-        } else {
-            self::$called[$eventName] = true;
         }
 
+        self::$called[$eventName] = true;
         parent::execute($observer);
     }
 
