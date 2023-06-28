@@ -47,11 +47,7 @@ class Runtime implements DefinitionInterface
 
     protected function getBacktrace()
     {
-        if(null === self::$backtrace) {
-            self::$backtrace = debug_backtrace();
-        }
-
-        return self::$backtrace;
+        return debug_backtrace();
     }
 
     /**
