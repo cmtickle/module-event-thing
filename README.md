@@ -120,6 +120,8 @@ Each Generic Plugin needs two elements, both are added to di.xml in the standard
 * A VirtualType which declares which class of Generic Plugin to use, which class, method and Plugin type to use.
 * The Plugin definition itself, which refers to the VirtualType.
 
+**IMPORTANT:** VirtualType(s) MUST be defined in global scope (etc/di.xml)
+
 For example, to process a Generic Plugin for the Product Class on `afterGetPrice` and `afterLoad`::
 ```xml
 <?xml version="1.0"?>
