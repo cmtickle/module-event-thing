@@ -1,6 +1,6 @@
 # Event Thing for Magento 2
 
-This module provides the core functionality of "Generic Observers", "Generic Plugins" and "Transport Adapters".
+This module provides the functionality of "Generic Observers", "Generic Plugins" and "Transport Adapters".
 
 Generic Observers & Plugins enable the logic/integration touch points of Magento Plugins & Observers to be handled 
 outside the core Magento application.
