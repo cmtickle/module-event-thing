@@ -51,7 +51,7 @@ app/etc/config.xml
 A Generic Observer should, conceptually, be considered asynchronous. Don't rely on it running immediately, imagine that 
 your observer is added to a queue.
 
-A Geneeric Observer **MUST NOT** attempt to affect data at the runtime (it could be used to trigger an API call to 
+A Generic Observer **MUST NOT** attempt to affect data at the runtime (it could be used to trigger an API call to 
 modify data later). Use a Generic Plugin if you need to affect data at runtime.
 
 Meaning, it should be possible for the Observer to run at any point in the future and treat data provided by the event 
